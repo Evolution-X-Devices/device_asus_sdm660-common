@@ -44,8 +44,8 @@ public class DeviceSettings extends PreferenceFragment implements
     private final static String TORCH_2_BRIGHTNESS_PATH = "/sys/devices/soc/800f000.qcom," +
             "spmi/spmi-0/spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_1/max_brightness";
     private static final String PREF_DEVICE_KCAL = "device_kcal";
-    private static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
-    private static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
+    final static String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
+    final static String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
     private static Context mContext;
     private CustomSeekBarPreference mTorchBrightness;
     private CustomSeekBarPreference mHeadphoneGain;
@@ -65,9 +65,11 @@ public class DeviceSettings extends PreferenceFragment implements
         mTorchBrightness.setOnPreferenceChangeListener(this);
 
         mHeadphoneGain = (CustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
+        mHeadphoneGain.setValue(prefs.getInt(PREF_HEADPHONE_GAIN, 0));
         mHeadphoneGain.setOnPreferenceChangeListener(this);
 
         mMicrophoneGain = (CustomSeekBarPreference) findPreference(PREF_MICROPHONE_GAIN);
+        mMicrophoneGain.setValue(prefs.getInt(PREF_MICROPHONE_GAIN, 0));
         mMicrophoneGain.setOnPreferenceChangeListener(this);
 
         SwitchPreference fpsInfo = (SwitchPreference) findPreference(PREF_KEY_FPS_INFO);

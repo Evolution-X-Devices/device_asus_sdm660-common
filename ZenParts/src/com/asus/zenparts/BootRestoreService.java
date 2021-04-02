@@ -95,8 +95,6 @@ public class BootRestoreService extends Service implements KcalConstants {
         String TORCH_2_BRIGHTNESS_PATH = "/sys/devices/soc/800f000.qcom,spmi/spmi-0/" +
                 "spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_1/" +
                 "max_brightness";
-        String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
-        String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
 
         // Restore preferences
         FileUtils.setValue(TORCH_1_BRIGHTNESS_PATH,
@@ -105,14 +103,15 @@ public class BootRestoreService extends Service implements KcalConstants {
         FileUtils.setValue(TORCH_2_BRIGHTNESS_PATH,
                 Settings.Secure.getInt(getContentResolver(),
                         DeviceSettings.PREF_TORCH_BRIGHTNESS, 100));
-        int gain = Settings.Secure.getInt(getContentResolver(),
-                DeviceSettings.PREF_HEADPHONE_GAIN, 0);
-        FileUtils.setValue(HEADPHONE_GAIN_PATH, gain + " " + gain);
-        FileUtils.setValue(MICROPHONE_GAIN_PATH, Settings.Secure.getInt(getContentResolver(),
-                DeviceSettings.PREF_MICROPHONE_GAIN, 0));
         FileUtils.setValue(DeviceSettings.BACKLIGHT_DIMMER_PATH, Settings.Secure.getInt(getContentResolver(),
                 DeviceSettings.PREF_BACKLIGHT_DIMMER, 0));
 
+	// Restore sound control
+        int gain = sharedPrefs.getInt(DeviceSettings.PREF_HEADPHONE_GAIN, 0);
+        FileUtils.setValue(DeviceSettings.HEADPHONE_GAIN_PATH, gain + " " + gain);
+        FileUtils.setValue(DeviceSettings.MICROPHONE_GAIN_PATH, sharedPrefs.getInt(DeviceSettings.PREF_MICROPHONE_GAIN, 0));
+
+	// Restore fps info
         boolean enabled = sharedPrefs.getBoolean(DeviceSettings.PREF_KEY_FPS_INFO, false);
         if (enabled)
             startService(new Intent(this, FPSInfoService.class));
