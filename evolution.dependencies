@@ -1,0 +1,14 @@
+[
+  {
+    "remote": "github",
+    "repository": "Evolution-X-Devices/kernel_asus_sdm660",
+    "target_path": "kernel/asus/sdm660",
+    "branch": "tiramisu"
+  },
+  {
+    "remote": "gitlab",
+    "repository": "GhostMaster69-dev/cosmic-clang",
+    "target_path": "prebuilts/clang/host/linux-x86/clang-cosmic",
+    "branch": "master"
+  }
+]
