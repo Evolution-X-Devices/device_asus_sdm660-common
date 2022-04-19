@@ -177,6 +177,9 @@ PRODUCT_PACKAGES += \
     sap.conf \
     xtwifi.conf
 
+# GMS
+$(call inherit-product, device/asus/sdm660-common/configs/gms_full.mk)
+
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
